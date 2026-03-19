@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Anto John P J – Career Portfolio</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f5f5f3;
+    --color-text-primary: #1a1a18;
+    --color-text-secondary: #5f5e5a;
+    --color-border: rgba(0,0,0,0.12);
+    --color-border-hover: rgba(0,0,0,0.25);
+    --color-blue-bg: #E6F1FB;
+    --color-blue-text: #0C447C;
+    --color-blue-mid: #185FA5;
+    --color-amber-bg: #FAEEDA;
+    --color-amber-text: #633806;
+    --color-amber-mid: #EF9F27;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg-primary: #1e1e1c;
+      --color-bg-secondary: #2a2a28;
+      --color-text-primary: #f0ede6;
+      --color-text-secondary: #a8a59e;
+      --color-border: rgba(255,255,255,0.1);
+      --color-border-hover: rgba(255,255,255,0.22);
+      --color-blue-bg: #042C53;
+      --color-blue-text: #B5D4F4;
+      --color-blue-mid: #378ADD;
+      --color-amber-bg: #412402;
+      --color-amber-text: #FAC775;
+      --color-amber-mid: #EF9F27;
+    }
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .portfolio {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem 1.5rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--color-blue-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 500;
+    color: var(--color-blue-bg);
+    flex-shrink: 0;
+  }
+  .hero-text h1 { font-size: 20px; font-weight: 500; margin-bottom: 4px; }
+  .hero-text .headline { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 10px; line-height: 1.55; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--color-blue-bg);
+    color: var(--color-blue-text);
+    font-weight: 500;
+  }
+
+  /* Stats */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .stat {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1rem;
+    text-align: center;
+  }
+  .stat-num { font-size: 24px; font-weight: 500; }
+  .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+
+  /* Section label */
+  .section-label {
+    font-size: 11px; font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  /* Summary */
+  .summary-card {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 22px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 10px; bottom: 10px;
+    width: 1px;
+    background: var(--color-border);
+  }
+  .job {
+    position: relative;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .job.visible { opacity: 1; transform: translateY(0); }
+  .job::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 12px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--color-blue-mid);
+    border: 2px solid var(--color-bg-secondary);
+  }
+  .job-card {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .job-card:hover { border-color: var(--color-border-hover); }
+  .job-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .job-title { font-size: 14px; font-weight: 500; }
+  .job-period { font-size: 11px; color: var(--color-text-secondary); white-space: nowrap; flex-shrink: 0; }
+  .job-company { font-size: 12px; color: var(--color-blue-mid); margin-top: 3px; }
+  .job-desc {
+    font-size: 13px; color: var(--color-text-secondary);
+    line-height: 1.65; margin-top: 0;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, margin-top 0.3s ease;
+  }
+  .job-desc.open { max-height: 300px; margin-top: 10px; }
+  .expand-btn { font-size: 11px; color: var(--color-blue-mid); margin-top: 8px; user-select: none; }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 8px;
+  }
+  .skill-item {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 0.9rem;
+    font-size: 13px;
+  }
+
+  /* Languages */
+  .lang-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .lang-pill {
+    font-size: 12px; padding: 5px 13px;
+    border-radius: 20px;
+    border: 0.5px solid var(--color-border);
+    color: var(--color-text-secondary);
+    background: var(--color-bg-primary);
+  }
+
+  /* Education */
+  .edu-card {
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+  .edu-degree { font-size: 14px; font-weight: 500; }
+  .edu-school { font-size: 12px; color: var(--color-text-secondary); margin-top: 3px; }
+
+  /* Award */
+  .award {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--color-amber-bg);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 13px;
+    color: var(--color-amber-text);
+    font-weight: 500;
+  }
+  .award-dot {
+    width: 14px; height: 14px;
+    background: var(--color-amber-mid);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Contact */
+  .contact-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0.25rem; }
+  .contact-chip {
+    font-size: 12px; padding: 5px 13px;
+    border-radius: 20px;
+    background: var(--color-bg-primary);
+    border: 0.5px solid var(--color-border);
+    color: var(--color-text-secondary);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-top: 3rem;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 480px) {
+    .hero { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .stats-row { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="portfolio">
+
+  <div class="hero">
+    <div class="avatar">AJ</div>
+    <div class="hero-text">
+      <h1>Anto John P J</h1>
+      <div class="headline">Customer Operations &amp; People Leader · Team Lead – CRM/CX<br>17+ Years across India, UAE, UK &amp; US markets</div>
+      <div class="tag-row">
+        <span class="tag">KPIs</span>
+        <span class="tag">Escalations</span>
+        <span class="tag">Coaching</span>
+        <span class="tag">Zoho CRM</span>
+        <span class="tag">BPO</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">17+</div><div class="stat-label">Years experience</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Roles held</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Languages</div></div>
+  </div>
+
+  <div class="section-label">About</div>
+  <div class="summary-card">
+    People-first, performance-focused operations leader with a track record in BPO &amp; contact center environments. Experienced in escalation handling, CRM operations, team coaching, quality, and training — across India, UAE, UK &amp; US markets. Seeking a stable leadership role in Team Leader / Operations Supervisor, CX, Quality, or Training.
+  </div>
+
+  <div class="section-label">Career timeline</div>
+  <div class="timeline" id="timeline">
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Sales Specialist</div>
+            <div class="job-company">Lektik</div>
+          </div>
+          <div class="job-period">Jan 2025 – Sep 2025</div>
+        </div>
+        <div class="job-desc">Led B2B outbound prospecting for a US-focused AI software startup. Secured appointments with C-suite and VP-level decision makers using Zoho CRM, LinkedIn, 3CX, and Slack. Worked night shifts aligned with US hours — consistently surpassed appointment and conversion targets.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Independent Consultant – Language Training</div>
+            <div class="job-company">Freelance</div>
+          </div>
+          <div class="job-period">Jul 2020 – Dec 2024</div>
+        </div>
+        <div class="job-desc">Delivered 150+ hours of customized spoken English training to professionals, students, and homemakers. Focused on fluency, pronunciation, and interview confidence. Many learners secured promotions and new jobs following training.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Financial Consultant – Freelance</div>
+            <div class="job-company">HDFC Life</div>
+          </div>
+          <div class="job-period">Jul 2021 – Feb 2023</div>
+        </div>
+        <div class="job-desc">Supported CRM data coordination and client communication campaigns for HDFC Life. Provided consultative selling and personalized policy recommendations. IRDAI certified.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Business Development Specialist</div>
+            <div class="job-company">ISB Management Consultancy, UAE</div>
+          </div>
+          <div class="job-period">Apr 2019 – Mar 2020</div>
+        </div>
+        <div class="job-desc">Generated leads for UAE bank partners (business loans &amp; credit products) across SME and corporate clients. Conducted outbound calling in English, Hindi, and Malayalam. Consistently exceeded daily and monthly conversion targets.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Team Leader – CRM Operations</div>
+            <div class="job-company">Asian Media Group (Pali Media Pvt. Ltd.)</div>
+          </div>
+          <div class="job-period">Jan 2018 – Mar 2019</div>
+        </div>
+        <div class="job-desc">Led a 22-member international voice team (UK &amp; US clients) for a pilot batch setup covering wholesale, retail, pharma, and hospitality magazines. Managed quality analysts, live audits, recruitment, and onboarding during the operational launch phase.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Real Estate Consultant</div>
+            <div class="job-company">Self Employed</div>
+          </div>
+          <div class="job-period">Jan 2014 – Oct 2017</div>
+        </div>
+        <div class="job-desc">Co-partnered with family to identify, list, and sell residential and commercial properties across Kerala. Managed client acquisition, property promotion, negotiations, and coordinated legal documentation with local authorities and developers.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Senior Consultant – Service Delivery</div>
+            <div class="job-company">Sutherland Global Services</div>
+          </div>
+          <div class="job-period">Dec 2010 – May 2013</div>
+        </div>
+        <div class="job-desc">Provided advanced technical support for McAfee antivirus customers (North America, EMEA, APAC) via remote troubleshooting using GoToAssist. Handled end-to-end virus resolution and system recovery. Recognized as Top Performer Q2 2012.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-card" onclick="toggle(this)">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Senior Process Executive</div>
+            <div class="job-company">Infosys BPO</div>
+          </div>
+          <div class="job-period">May 2007 – Oct 2010</div>
+        </div>
+        <div class="job-desc">Started career at Infosys BPO handling British Telecom UK customers for technical and billing queries. Used Openreach diagnostics and IoT fault-tracing tools, coordinated with field engineers, and managed billing disputes and charge investigations.</div>
+        <div class="expand-btn">Show more ↓</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-item">Zoho CRM</div>
+    <div class="skill-item">Customer service operations</div>
+    <div class="skill-item">People management</div>
+    <div class="skill-item">KPI delivery</div>
+    <div class="skill-item">Escalation handling</div>
+    <div class="skill-item">Quality &amp; training</div>
+    <div class="skill-item">Coaching &amp; mentoring</div>
+    <div class="skill-item">B2B sales &amp; prospecting</div>
+  </div>
+
+  <div class="section-label">Languages</div>
+  <div class="lang-row">
+    <span class="lang-pill">Malayalam (Native)</span>
+    <span class="lang-pill">English (Full professional)</span>
+    <span class="lang-pill">Hindi (Full professional)</span>
+    <span class="lang-pill">Kannada (Working)</span>
+    <span class="lang-pill">Tamil (Working)</span>
+  </div>
+
+  <div class="section-label">Education</div>
+  <div class="edu-card">
+    <div class="edu-degree">Bachelor of Commerce – Marketing Management</div>
+    <div class="edu-school">Aquinas College · 2004 – 2007</div>
+  </div>
+  <div class="edu-card">
+    <div class="edu-degree">Higher Secondary – Commerce with Computer Applications</div>
+    <div class="edu-school">Sacred Hearts H.S.S · 2002 – 2004</div>
+  </div>
+
+  <div class="section-label">Recognition</div>
+  <div class="award">
+    <span class="award-dot"></span>
+    Top Performer Q2 2012 – Sutherland Global Services
+  </div>
+
+  <div class="section-label">Contact</div>
+  <div class="contact-row">
+    <span class="contact-chip">Kochi, Kerala, India</span>
+    <span class="contact-chip">+91 8129215893</span>
+    <span class="contact-chip">antojohn007@yahoo.com</span>
+    <a href="https://www.linkedin.com/in/antojohnpj" target="_blank" style="text-decoration:none;">
+      <span class="contact-chip" style="color: var(--color-blue-mid);">linkedin.com/in/antojohnpj ↗</span>
+    </a>
+  </div>
+
+  <div class="footer">Anto John P J · Career Portfolio · 2026</div>
+
+</div>
+
+<script>
+  function toggle(card) {
+    const desc = card.querySelector('.job-desc');
+    const btn = card.querySelector('.expand-btn');
+    const isOpen = desc.classList.contains('open');
+    desc.classList.toggle('open', !isOpen);
+    btn.textContent = isOpen ? 'Show more ↓' : 'Show less ↑';
+  }
+
+  const jobs = document.querySelectorAll('.job');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  jobs.forEach(j => observer.observe(j));
+  setTimeout(() => jobs.forEach(j => j.classList.add('visible')), 400);
+</script>
+</body>
+</html>
